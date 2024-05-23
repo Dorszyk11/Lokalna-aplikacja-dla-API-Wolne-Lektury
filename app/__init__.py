@@ -10,7 +10,8 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        from . import routes
+        from .routes import init_routes
+        init_routes(app)
         db.create_all()
 
     return app

@@ -10,7 +10,14 @@ def add_book(data):
     )
     db.session.add(book)
     db.session.commit()
-    return book
+    return {
+        "id": book.id,
+        "title": book.title,
+        "epoch_id": book.epoch_id,
+        "genre_id": book.genre_id,
+        "kind_id": book.kind_id,
+        "author_id": book.author_id
+    }
 
 def add_categories(data):
     for category_type, categories in data.items():
