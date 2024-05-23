@@ -20,18 +20,22 @@ def add_book(data):
     }
 
 def add_categories(data):
-    for category_type, categories in data.items():
-        for category in categories:
-            if category_type == 'epochs':
-                db.session.add(Epoch(name=category['name']))
-            elif category_type == 'genres':
-                db.session.add(Genre(name=category['name']))
-            elif category_type == 'kinds':
-                db.session.add(Kind(name=category['name']))
-            elif category_type == 'authors':
-                db.session.add(Author(name=category['name']))
-    db.session.commit()
-    return data
+    try:
+        for category_type, categories in data.items():
+            for category in categories:
+                if category_type == 'epochs':
+                    db.session.add(Epoch(name=category['name']))
+                elif category_type == 'genres':
+                    db.session.add(Genre(name=category['name']))
+                elif category_type == 'kinds':
+                    db.session.add(Kind(name=category['name']))
+                elif category_type == 'authors':
+                    db.session.add(Author(name=category['name']))
+        db.session.commit()
+        return data
+    except Exception as e:
+        current_app.logger.error('Error adding categories: %s', e)
+        raise
 
 def filter_books(filters):
     query = Book.query
